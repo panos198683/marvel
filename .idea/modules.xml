@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Marvel.iml" filepath="$PROJECT_DIR$/Marvel.iml" group="Marvel" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Marvel/app" />
+      <module fileurl="file://$PROJECT_DIR$/athens-pf-android-marvel-x-android.iml" filepath="$PROJECT_DIR$/athens-pf-android-marvel-x-android.iml" />
+    </modules>
+  </component>
+</project>
