@@ -38,21 +38,26 @@ public class MainActivity extends AppCompatActivity {
         
     }
     public void signupuser(View view){
-        mAuth.createUserWithEmailAndPassword(editText1.getText().toString(),
-                editText2.getText().toString()).addOnCompleteListener(this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            addUserDetails("marvel",user);
-                            textView.setText(user.getUid());
-                        } else {
-                            textView.setText(task.getException().getMessage());
-                        }
-                    }
-                });
+
+        setContentView(R.layout.activity_sign_up);
+
+//        mAuth.createUserWithEmailAndPassword(editText1.getText().toString(),
+//                editText2.getText().toString()).addOnCompleteListener(this,
+//                new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()){
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            addUserDetails("marvel",user);
+//                            textView.setText(user.getUid());
+//                        } else {
+//                            textView.setText(task.getException().getMessage());
+//                        }
+//                    }
+//                });
     }
+
+    
     private void addUserDetails(String displayName, FirebaseUser user){
         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                 .setDisplayName(displayName)
