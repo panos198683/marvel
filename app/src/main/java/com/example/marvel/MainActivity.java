@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 //                });
     }
 
-    
+
     private void addUserDetails(String displayName, FirebaseUser user){
         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                 .setDisplayName(displayName)
