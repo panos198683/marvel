@@ -71,7 +71,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         app:passwordToggleEnabled="true"
         android:textColorHint="#A4A4A4"
         app:passwordToggleTint="#ffffff"
@@ -107,6 +106,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
 
         >
 

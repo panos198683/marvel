@@ -3,6 +3,7 @@ package com.example.marvel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -39,38 +40,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void signupuser(View view){
 
-        setContentView(R.layout.activity_sign_up);
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
 
-//        mAuth.createUserWithEmailAndPassword(editText1.getText().toString(),
-//                editText2.getText().toString()).addOnCompleteListener(this,
-//                new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()){
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            addUserDetails("marvel",user);
-//                            textView.setText(user.getUid());
-//                        } else {
-//                            textView.setText(task.getException().getMessage());
-//                        }
-//                    }
-//                });
+
     }
 
-
-    private void addUserDetails(String displayName, FirebaseUser user){
-        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .build();
-        user.updateProfile(profileChangeRequest)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                            Toast.makeText(getApplicationContext(),"Success!",Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
     public void signinuser(View view){
         mAuth.signInWithEmailAndPassword(editText1.getText().toString(),
                 editText2.getText().toString())
