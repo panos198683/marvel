@@ -8,8 +8,8 @@
     android:background="#2D2D2D"
     >
 
-
     android:font="@font/marvelfont"
+
 
     <TextView
         android:layout_height="wrap_content"
