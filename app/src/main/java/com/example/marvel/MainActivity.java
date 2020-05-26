@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         editText2=findViewById(R.id.editText2);
         textView = findViewById(R.id.textView);
         FirebaseUser currentUser =mAuth.getCurrentUser();
+
         if(currentUser==null)
             textView.setText("NO USER YET");
             textView.setTextColor(Color.parseColor("#ffffff"));
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void passwordvisible(View view){
+    public void getusers(View view){
 
     }
 
