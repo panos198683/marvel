@@ -139,9 +139,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColorHint="#A4A4A4"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="#ffffff">
+        android:textColorHint="#A4A4A4">
 
         <com.google.android.material.textfield.TextInputEditText
 

@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DatabaseReference myRef;
+    DatabaseData mDatabaseHelper;
 
     User user= new User();
 EditText firstname,lastname,nickname,emailsu,passwordsu;
@@ -32,6 +33,7 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         mAuth = FirebaseAuth.getInstance();
+        mDatabaseHelper= new DatabaseData(this);
 
 
     }
@@ -45,23 +47,32 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
         firstname=findViewById(R.id.firstname);
         lastname=findViewById(R.id.lastname);
         nickname=findViewById(R.id.nickname);
+        emailsu=findViewById(R.id.emailsu);
+        passwordsu=findViewById(R.id.passwordsu);
 
-        if (!firstname.getText().toString().equals("") || !lastname.getText().toString().equals("") || !nickname.getText().toString().equals("") || !emailsu.getText().toString().equals("") || !passwordsu.getText().toString().equals("")){
-                    mAuth.createUserWithEmailAndPassword(emailsu.getText().toString(),
-                passwordsu.getText().toString()).addOnCompleteListener(this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            myRef= FirebaseDatabase.getInstance().getReference().child("User");
-                            userdetails(firstname,lastname,nickname);
-                            addUserDetails("marvel",user);
-                        } else {
-                        }
-                    }
-                });
+        if (firstname.length()!=0 && lastname.length()!=0 && nickname.length()!=0 && emailsu.length()!=0 && passwordsu.length()!=0){
+            AddData(firstname.getText().toString(),lastname.getText().toString(),nickname.getText().toString(),emailsu.getText().toString(),passwordsu.getText().toString());
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+//                    mAuth.createUserWithEmailAndPassword(emailsu.getText().toString(),
+//                            passwordsu.getText().toString()).addOnCompleteListener(this,
+//                            new OnCompleteListener<AuthResult>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()){
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            myRef= FirebaseDatabase.getInstance().getReference().child("User");
+//                            userdetails(firstname,lastname,nickname);
+//                            addUserDetails("marvel",user);
+//                        } else {
+//                        }
+//                    }
+//                });
         }
+    }
+
+    public void AddData(String firstname,String lastname,String nickname,String email,String password){
+        boolean insertData = mDatabaseHelper.addData(firstname,lastname,nickname,email,password);
     }
 
     private void userdetails(EditText firstname, EditText lastname, EditText nickname){
