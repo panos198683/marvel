@@ -23,6 +23,6 @@ public class CharactersActivity extends AppCompatActivity {
 
     }
 
-    
+
 
 }

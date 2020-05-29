@@ -11,7 +11,6 @@ import android.util.Log;
 
 public class DatabaseData extends SQLiteOpenHelper {
     private static final String TAG = "Marvelusers";
-
     private static final String TABLE_NAME = "users";
     private static final String COL1 ="ID";
     private static final String COL2 ="firstname";

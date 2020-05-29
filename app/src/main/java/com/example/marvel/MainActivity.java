@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (founder==true){
 
-            Intent intent = new Intent(this, CharactersActivity.class);
+            Intent intent = new Intent(this, MainMenu.class);
             intent.putExtra("nickname",nickname);
             startActivity(intent);
         }
