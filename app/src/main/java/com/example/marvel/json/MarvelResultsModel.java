@@ -3,17 +3,17 @@ package com.example.marvel.json;
 import java.util.Date;
 import java.util.List;
 
-public class MarvelJsonModel {
+public class MarvelResultsModel {
     private int id;
     private String name;
     private String description;
     private Date modified;
-    private List<JsonthumbnailModel> thumbnail;
+    private JsonthumbnailModel thumbnail;
     private String recourceURI;
-    private List<JsonComicModel> comics;
-    private List<JsonSeriesModel> series;
-    private List<JsonStoriesModel> stories;
-    private List<JsonEventsModel> events;
+    private JsonComicModel comics;
+    private JsonSeriesModel series;
+    private JsonStoriesModel stories;
+    private JsonEventsModel events;
     private List<JsonUrlsModel> urls;
 
     public int getId() {
@@ -48,11 +48,11 @@ public class MarvelJsonModel {
         this.modified = modified;
     }
 
-    public List<JsonthumbnailModel> getThumbnail() {
+    public JsonthumbnailModel getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(List<JsonthumbnailModel> thumbnail) {
+    public void setThumbnail(JsonthumbnailModel thumbnail) {
         this.thumbnail = thumbnail;
     }
 
@@ -64,35 +64,35 @@ public class MarvelJsonModel {
         this.recourceURI = recourceURI;
     }
 
-    public List<JsonComicModel> getComics() {
+    public JsonComicModel getComics() {
         return comics;
     }
 
-    public void setComics(List<JsonComicModel> comics) {
+    public void setComics(JsonComicModel comics) {
         this.comics = comics;
     }
 
-    public List<JsonSeriesModel> getSeries() {
+    public JsonSeriesModel getSeries() {
         return series;
     }
 
-    public void setSeries(List<JsonSeriesModel> series) {
+    public void setSeries(JsonSeriesModel series) {
         this.series = series;
     }
 
-    public List<JsonStoriesModel> getStories() {
+    public JsonStoriesModel getStories() {
         return stories;
     }
 
-    public void setStories(List<JsonStoriesModel> stories) {
+    public void setStories(JsonStoriesModel stories) {
         this.stories = stories;
     }
 
-    public List<JsonEventsModel> getEvents() {
+    public JsonEventsModel getEvents() {
         return events;
     }
 
-    public void setEvents(List<JsonEventsModel> events) {
+    public void setEvents(JsonEventsModel events) {
         this.events = events;
     }
 

@@ -37,7 +37,7 @@ public class DatabaseData extends SQLiteOpenHelper {
 
     public void createtable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String createTable  = "CREATE TABLE "+ TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"+ COL2 +" VARCHAR(30), " + COL3 + " VARCHAR(30), "+ COL4 +" VARCHAR(30), "+ COL5 +" VARCHAR(30),"+ COL6 +" VARCHAR(30)) " ;
+        String createTable  = "CREATE TABLE "+ TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"+ COL2 +" VARCHAR(30), " + COL3 + " VARCHAR(30), "+ COL4 +" VARCHAR(30) UNIQUE, "+ COL5 +" VARCHAR(30) UNIQUE,"+ COL6 +" VARCHAR(30)) " ;
         db.execSQL(createTable);
         Log.d(TAG, "Created Table");
     }
@@ -77,4 +77,5 @@ public class DatabaseData extends SQLiteOpenHelper {
             return true;
         }
     }
+
 }

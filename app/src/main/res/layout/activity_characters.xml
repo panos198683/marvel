@@ -40,4 +40,56 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.03">
     </SearchView>
+
+    <TextView
+        android:id="@+id/allchars"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHeight_percent="0.04"
+        android:text="All"
+        app:autoSizeTextType="uniform"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.12"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/seperator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.04"
+        app:layout_constraintHeight_percent="0.04"
+        android:text="/"
+        app:autoSizeTextType="uniform"
+        android:textColor="#A4A4A4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintVertical_bias="0.12"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/favourite"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.26"
+        app:layout_constraintHeight_percent="0.04"
+        android:text="Favourite"
+        app:autoSizeTextType="uniform"
+        android:textColor="#A4A4A4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintVertical_bias="0.12"
+        android:gravity="center"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
