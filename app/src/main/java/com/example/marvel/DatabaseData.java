@@ -20,7 +20,7 @@ public class DatabaseData extends SQLiteOpenHelper {
     private static final String COL6 ="password";
 
     public DatabaseData(Context context){
-        super(context, TABLE_NAME, null,1);
+        super(context, TABLE_NAME, null,2);
 
     }
 
@@ -59,6 +59,7 @@ public class DatabaseData extends SQLiteOpenHelper {
         String deleteeverything = "DROP TABLE users";
         db.execSQL(deleteeverything);
     }
+
 
 
     public boolean addData(String item,String item2,String item3,String item4,String item5){

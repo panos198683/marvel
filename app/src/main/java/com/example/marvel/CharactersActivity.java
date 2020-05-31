@@ -1,6 +1,8 @@
 package com.example.marvel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +17,15 @@ import com.android.volley.toolbox.Volley;
 import com.example.marvel.json.JsonMarvelModel;
 import com.google.gson.Gson;
 
-public class CharactersActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class CharactersActivity extends AppCompatActivity {
+    JsonMarvelModel model;
     TextView playername;
+    private RecyclerView charRecyclerView;
+    private RecyclerView.Adapter charAdapter;
+    private RecyclerView.LayoutManager charLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +46,7 @@ public class CharactersActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                JsonMarvelModel model;
+
                 model = new Gson().fromJson(response, JsonMarvelModel.class);
                 Log.i("RESPONSE", model.toString());
                 //model.getData().getResults().get(1)
@@ -54,9 +62,31 @@ public class CharactersActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
+        filllist();
 
 
     }
+
+    public void filllist(){
+        int countlist= model.getData().getResults().size();
+        ArrayList<ListItem> charsList = new ArrayList<>();
+        for (int i=0;i<countlist;i++) {
+            String iconpath;
+            String charname;
+            charname = model.getData().getResults().get(i).getName();
+            iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + "."+ model.getData().getResults().get(i).getThumbnail().getExtension();
+            charsList.add(new ListItem(iconpath,R.drawable.eyeicon,charname));
+        }
+        charRecyclerView = findViewById(R.id.recyclerview);
+        charRecyclerView.setHasFixedSize(true);
+        charLayoutManager = new LinearLayoutManager(this);
+        charAdapter = new CharAdapter(charsList);
+        charRecyclerView.setLayoutManager(charLayoutManager);
+        charRecyclerView.setAdapter(charAdapter);
+
+
+    }
+
 
 
 

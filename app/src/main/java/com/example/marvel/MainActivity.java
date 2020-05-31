@@ -111,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
+    public void cleardtbs(View view){
+        mDatabaseHelper.cleartable();
+    }
 
 
 
