@@ -12,9 +12,6 @@
 
     >
 
-
-
-    android:font="@font/marvelfont"
     <TextView
         android:gravity="center"
         android:id="@+id/textView"
@@ -156,7 +153,6 @@
         app:autoSizeTextType="uniform"
         android:background="#F0131E"
         android:fontFamily="@font/marvelfont"
-        android:onClick="signinuser"
         android:text="LOGIN"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
