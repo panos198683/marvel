@@ -16,13 +16,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     EditText editText1,editText2;
     TextView ErrorAnnouncer;
     DatabaseData mDatabaseHelper;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         editText1=findViewById(R.id.editText1);
         editText2=findViewById(R.id.editText2);
         ErrorAnnouncer = findViewById(R.id.textView);
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             ErrorAnnouncer.setText("A field is not filled!");
         }
     }
+
     public void forgotpassword(View view){
         ErrorAnnouncer.setText("Forgot Password Screen");
 
@@ -94,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
             nickname=data.getString(0);
         }
         if (founder==true){
-
-            Intent intent = new Intent(this, MainMenu.class);
+            Intent intent = new Intent(this, SignUpActivity.class);
             intent.putExtra("nickname",nickname);
             startActivity(intent);
         }
