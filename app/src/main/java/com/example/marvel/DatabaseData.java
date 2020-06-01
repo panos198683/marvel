@@ -21,7 +21,6 @@ public class DatabaseData extends SQLiteOpenHelper {
 
     public DatabaseData(Context context){
         super(context, TABLE_NAME, null,2);
-
     }
 
     @Override
@@ -32,11 +31,10 @@ public class DatabaseData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        createtable();
+        createtable(db);
     }
 
-    public void createtable(){
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void createtable(SQLiteDatabase db){
         String createTable  = "CREATE TABLE "+ TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"+ COL2 +" VARCHAR(30), " + COL3 + " VARCHAR(30), "+ COL4 +" VARCHAR(30) UNIQUE, "+ COL5 +" VARCHAR(30) UNIQUE,"+ COL6 +" VARCHAR(30)) " ;
         db.execSQL(createTable);
         Log.d(TAG, "Created Table");
