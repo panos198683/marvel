@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
 //        if(currentUser==null)
 //            ErrorAnnouncer.setText("NO USER YET");
 //        ErrorAnnouncer.setTextColor(Color.parseColor("#ffffff"));
+
+        Button btn = findViewById(R.id.buttonlogin);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signinuser(v);
+            }
+        });
 
         
     }
