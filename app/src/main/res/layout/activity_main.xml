@@ -102,7 +102,6 @@
         android:layout_height="wrap_content"
         android:paddingVertical="6dp"
         app:autoSizeTextType="uniform"
-        android:layout_marginBottom="164dp"
         android:background="@drawable/radius_red"
         android:fontFamily="@font/marvelfont"
         android:text="LOGIN"
