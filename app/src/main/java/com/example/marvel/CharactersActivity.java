@@ -86,8 +86,11 @@ public class CharactersActivity extends AppCompatActivity {
         int countlist= model.getData().getResults().size();
         ArrayList<ListItem> charsList = new ArrayList<>();
         for (int i=0;i<countlist;i++) {
+            String charpath,charpath2;
             String iconpath;
             String charname;
+            charpath= model.getData().getResults().get(i).getThumbnail().getPath();
+            charpath2=charpath.replace("http://","https://");
             charname = model.getData().getResults().get(i).getName();
             iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
             charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
