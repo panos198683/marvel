@@ -3,8 +3,11 @@ package com.example.marvel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,10 +20,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText editText1,editText2;
-    TextView textView;
+    TextView ErrorAnnouncer;
+    DatabaseData mDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,71 +34,86 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editText1=findViewById(R.id.editText1);
         editText2=findViewById(R.id.editText2);
-        textView = findViewById(R.id.textView);
-        FirebaseUser currentUser =mAuth.getCurrentUser();
-        if(currentUser==null)
-            textView.setText("NO USER YET");
-            textView.setTextColor(Color.parseColor("#ffffff"));
-        
+        ErrorAnnouncer = findViewById(R.id.textView);
+
+        mDatabaseHelper= new DatabaseData(this);
+//        FirebaseUser currentUser =mAuth.getCurrentUser();
+//        if(currentUser==null)
+//            ErrorAnnouncer.setText("NO USER YET");
+//        ErrorAnnouncer.setTextColor(Color.parseColor("#ffffff"));
+
         
     }
     public void signupuser(View view){
-        mAuth.createUserWithEmailAndPassword(editText1.getText().toString(),
-                editText2.getText().toString()).addOnCompleteListener(this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            addUserDetails("marvel",user);
-                            textView.setText(user.getUid());
-                        } else {
-                            textView.setText(task.getException().getMessage());
-                        }
-                    }
-                });
+
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
-    private void addUserDetails(String displayName, FirebaseUser user){
-        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .build();
-        user.updateProfile(profileChangeRequest)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                            Toast.makeText(getApplicationContext(),"Success!",Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
+
+
+
     public void signinuser(View view){
-        mAuth.signInWithEmailAndPassword(editText1.getText().toString(),
-                editText2.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            textView.setText(user.getUid());
-                            //mAuth.signOut();
-                        }
-                        else{
-                            textView.setText("failed to log in.");
-                        }
-                    }
-                });
+//        mAuth.signInWithEmailAndPassword(editText1.getText().toString(),
+//                editText2.getText().toString())
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            textView.setText(user.getUid());
+//                            //mAuth.signOut();
+//                        }
+//                        else{
+//                            textView.setText("failed to log in.");
+//                        }
+//                    }
+//                });
+        String email,password;
+        email=editText1.getText().toString();
+        password=editText2.getText().toString();
+        if (email.length()!=0 && password.length()!=0) {
+            ErrorAnnouncer.setText("");
+            Loginchecker(email, password);
+        }
+        else{
+            ErrorAnnouncer.setText("A field is not filled!");
+        }
     }
     public void forgotpassword(View view){
-        textView.setTextColor(Color.parseColor("#F0131E"));
-        textView.setText("Forgot Password Screen");
+        ErrorAnnouncer.setText("Forgot Password Screen");
 
 
     }
 
-    public void passwordvisible(View view){
+    public void Loginchecker(String email,String password){
+        Cursor data = mDatabaseHelper.getData(email,password);
+        String nickname="";
+        boolean founder=false;
+        if(data.moveToFirst()) {
+            founder=true;
+            nickname=data.getString(0);
+        }
+        if (founder==true){
+
+            Intent intent = new Intent(this, MainMenu.class);
+            intent.putExtra("nickname",nickname);
+            startActivity(intent);
+        }
+        else{
+            ErrorAnnouncer.setText("Wrong Username or Password");
+        }
+
 
     }
 
+
+    public void toastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    public void cleardtbs(View view){
+        mDatabaseHelper.cleartable();
+    }
 
 
 
