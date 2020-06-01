@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -23,11 +24,11 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class CharactersActivity extends AppCompatActivity {
+public class CharactersActivity extends AppCompatActivity  {
     JsonMarvelModel model;
     TextView playername;
     private RecyclerView charRecyclerView;
-    private RecyclerView.Adapter charAdapter;
+    private CharAdapter charAdapter;
     private RecyclerView.LayoutManager charLayoutManager;
 
     @Override
@@ -82,20 +83,33 @@ public class CharactersActivity extends AppCompatActivity {
 
     }
 
+    public void setcharacter(int position, ArrayList<ListItem> charsList){
+        Intent intent = new Intent(this, SetCharacter.class);
+        intent.putExtra("nickname",playername.getText());
+        intent.putExtra("position",position);
+        intent.putExtra("charsList",charsList);
+        startActivity(intent);
+    }
     public void filllist(){
         int countlist= model.getData().getResults().size();
-        ArrayList<ListItem> charsList = new ArrayList<>();
+        final ArrayList<ListItem> charsList = new ArrayList<>();
         for (int i=0;i<countlist;i++) {
-            String charpath,charpath2;
             String iconpath;
             String charname;
-            charpath= model.getData().getResults().get(i).getThumbnail().getPath();
-            charpath2=charpath.replace("http://","https://");
             charname = model.getData().getResults().get(i).getName();
             iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
             charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
         }
         charAdapter = new CharAdapter(charsList);
         charRecyclerView.setAdapter(charAdapter);
+        charAdapter.setOnItemClickListener(new CharAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position){
+                charsList.get(position);
+
+            }
+        });
     }
+
+
 }
