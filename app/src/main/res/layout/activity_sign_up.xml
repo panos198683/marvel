@@ -202,7 +202,6 @@
         android:fontFamily="@font/marvelfont"
         android:text="SIGN UP"
         android:textColor="#ffffff"
-        android:onClick="signupclicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
