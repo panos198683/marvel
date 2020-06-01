@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 //import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +25,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class MainActivity extends AppCompatActivity {
     //private FirebaseAuth mAuth;
-    EditText editText1,editText2;
+    TextInputEditText editText1,editText2;
     TextView ErrorAnnouncer;
     DatabaseData mDatabaseHelper;
 
@@ -33,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //mAuth = FirebaseAuth.getInstance();
-        editText1=findViewById(R.id.layoutEmail);
-        editText2=findViewById(R.id.layoutPassword);
+        editText1=findViewById(R.id.editText1);
+        editText2=findViewById(R.id.editText2);
+
         ErrorAnnouncer = findViewById(R.id.layoutannouncer);
 
         mDatabaseHelper= new DatabaseData(this);
@@ -50,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 signinuser(v);
             }
         });
+        TextView createaccount = findViewById(R.id.createanaccount);
+        createaccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signupuser(v);
+            }
+        });
+
 
         
     }

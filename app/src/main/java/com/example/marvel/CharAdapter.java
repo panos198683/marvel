@@ -1,5 +1,7 @@
 package com.example.marvel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -9,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -17,6 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder> {
+    private Context context;
 
     private ArrayList<ListItem> charactersList;
     public static class charViewHolder extends RecyclerView.ViewHolder{
@@ -24,6 +30,7 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         public ImageView favImage;
         public TextView charName;
         public Bitmap bitmap;
+
 
         public charViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,14 +65,18 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
     public charViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.exampleitem, parent, false);
         charViewHolder cvh = new charViewHolder(v);
+        context=parent.getContext();
         return cvh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull charViewHolder holder, int position) {
         ListItem currentItem = charactersList.get(position);
-        holder.bitmap = getBitMapFromURL(currentItem.getCharacterImageResource());
-        holder.charImageView.setImageBitmap(holder.bitmap);
+
+
+        Glide.with(context).load(currentItem.getCharacterImageResource()).into(holder.charImageView);
+//        holder.bitmap = getBitMapFromURL(currentItem.getCharacterImageResource());
+//        holder.charImageView.setImageBitmap(holder.bitmap);
         holder.favImage.setImageResource(currentItem.getFavouriteImageResource());
         holder.charName.setText(currentItem.getCharName());
 

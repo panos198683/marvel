@@ -16,15 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.DatabaseReference;
 
-import com.google.firebase.auth.UserProfileChangeRequest;
+//import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    DatabaseReference myRef;
+    //private FirebaseAuth mAuth;
+    //DatabaseReference myRef;
     DatabaseData mDatabaseHelper;
 
     User user= new User();
@@ -33,7 +33,7 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         mDatabaseHelper= new DatabaseData(this);
 
         Button button = findViewById(R.id.signup);
@@ -96,24 +96,24 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
         user.setFirstname(firstname.getText().toString());
         user.setLastname(lastname.getText().toString());
         user.setNickname(nickname.getText().toString());
-        myRef.push().setValue(user);
+        //myRef.push().setValue(user);
         Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
 
     }
 
-    private void addUserDetails(String displayName, FirebaseUser user){
-        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .build();
-        user.updateProfile(profileChangeRequest)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
+//    private void addUserDetails(String displayName, FirebaseUser user){
+//        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+//                .setDisplayName(displayName)
+//                .build();
+//        user.updateProfile(profileChangeRequest)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
+//    }
 
 }

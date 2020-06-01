@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -14,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.marvel.json.JsonMarvelModel;
 import com.google.gson.Gson;
 
@@ -32,7 +34,7 @@ public class CharactersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_characters);
         playername=findViewById(R.id.PlayerName);
         String nickname=getIntent().getStringExtra("nickname");
-        playername.setText(nickname.toString());
+        playername.setText(nickname);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class CharactersActivity extends AppCompatActivity {
         super.onPostResume();
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url2 ="http://gateway.marvel.com/v1/public/characters?ts=1590763605&apikey=85945ebf049310af9b57bdd9b21361ac&hash=2371fd05d862c167376b22e74613e634";
+        String url2 ="https://gateway.marvel.com/v1/public/characters?ts=1590763605&apikey=85945ebf049310af9b57bdd9b21361ac&hash=2371fd05d862c167376b22e74613e634";
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,new Response.Listener<String>() {
@@ -75,10 +77,10 @@ public class CharactersActivity extends AppCompatActivity {
             String iconpath;
             String charname;
             charname = model.getData().getResults().get(i).getName();
-            iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + "."+ model.getData().getResults().get(i).getThumbnail().getExtension();
-            charsList.add(new ListItem(iconpath,R.drawable.eyeicon,charname));
+            iconpath = '"'+model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension()+'"';
+            charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
         }
-        charRecyclerView = findViewById(R.id.recyclerview);
+        charRecyclerView = findViewById(R.id.recycleview);
         charRecyclerView.setHasFixedSize(true);
         charLayoutManager = new LinearLayoutManager(this);
         charAdapter = new CharAdapter(charsList);
