@@ -1,6 +1,8 @@
 package com.example.marvel;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +37,16 @@ public class CharactersActivity extends AppCompatActivity {
         playername=findViewById(R.id.PlayerName);
         String nickname=getIntent().getStringExtra("nickname");
         playername.setText(nickname);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        charRecyclerView = findViewById(R.id.recycleview);
+        charRecyclerView.setHasFixedSize(true);
+        charLayoutManager = new GridLayoutManager(this,3);
+        charRecyclerView.setLayoutManager(charLayoutManager);
     }
 
     @Override
@@ -77,20 +89,10 @@ public class CharactersActivity extends AppCompatActivity {
             String iconpath;
             String charname;
             charname = model.getData().getResults().get(i).getName();
-            iconpath = '"'+model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension()+'"';
+            iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
             charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
         }
-        charRecyclerView = findViewById(R.id.recycleview);
-        charRecyclerView.setHasFixedSize(true);
-        charLayoutManager = new LinearLayoutManager(this);
         charAdapter = new CharAdapter(charsList);
-        charRecyclerView.setLayoutManager(charLayoutManager);
         charRecyclerView.setAdapter(charAdapter);
-
-
     }
-
-
-
-
 }
