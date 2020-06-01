@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //mAuth = FirebaseAuth.getInstance();
-        editText1=findViewById(R.id.editText1);
-        editText2=findViewById(R.id.editText2);
-        ErrorAnnouncer = findViewById(R.id.textView);
+        editText1=findViewById(R.id.layoutEmail);
+        editText2=findViewById(R.id.layoutPassword);
+        ErrorAnnouncer = findViewById(R.id.layoutannouncer);
 
         mDatabaseHelper= new DatabaseData(this);
 //        FirebaseUser currentUser =mAuth.getCurrentUser();
