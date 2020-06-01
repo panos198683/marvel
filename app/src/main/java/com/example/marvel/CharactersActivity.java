@@ -80,7 +80,7 @@ public class CharactersActivity extends AppCompatActivity {
             charpath= model.getData().getResults().get(i).getThumbnail().getPath();
             charpath2=charpath.replace("http://","https://");
             charname = model.getData().getResults().get(i).getName();
-            iconpath = '"'+charpath2 + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension()+'"';
+            iconpath = charpath + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
             charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
         }
         charRecyclerView = findViewById(R.id.recycleview);

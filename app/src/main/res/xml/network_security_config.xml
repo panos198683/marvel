@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <network-security-config><base-config cleartextTrafficPermitted="true" />
-        <domain-config cleartextTrafficPermitted="true">
-            <domain includeSubdomains="true">i.annihil.us</domain>
-        </domain-config>
-    </network-security-config>
-
-</resources>
