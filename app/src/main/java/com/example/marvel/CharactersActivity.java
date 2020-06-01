@@ -49,6 +49,7 @@ public class CharactersActivity extends AppCompatActivity {
 
                 model = new Gson().fromJson(response, JsonMarvelModel.class);
                 Log.i("RESPONSE", model.toString());
+                filllist();
                 //model.getData().getResults().get(1)
                 //TextView t = (TextView)findViewById(R.id.textView5);
                 //t.setText(model.getData().getResults().get(1).getName());
@@ -62,7 +63,7 @@ public class CharactersActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
-        filllist();
+
 
 
     }

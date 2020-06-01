@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             nickname=data.getString(0);
         }
         if (founder==true){
-            Intent intent = new Intent(this, SignUpActivity.class);
+            Intent intent = new Intent(this, CharactersActivity.class);
             intent.putExtra("nickname",nickname);
             startActivity(intent);
         }

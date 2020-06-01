@@ -38,7 +38,6 @@ public class DatabaseData extends SQLiteOpenHelper {
         String createTable  = "CREATE TABLE "+ TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,"+ COL2 +" VARCHAR(30), " + COL3 + " VARCHAR(30), "+ COL4 +" VARCHAR(30) UNIQUE, "+ COL5 +" VARCHAR(30) UNIQUE,"+ COL6 +" VARCHAR(30)) " ;
         db.execSQL(createTable);
         Log.d(TAG, "Created Table");
-        db.close();
     }
 
     public Cursor getData(String item, String item2){
@@ -47,11 +46,9 @@ public class DatabaseData extends SQLiteOpenHelper {
 
         try{
             Cursor data = db.rawQuery(loginquery,null);
-            db.close();
             return data;
         }
         catch (SQLException e){
-        db.close();
         return null;
         }
     }
@@ -74,7 +71,6 @@ public class DatabaseData extends SQLiteOpenHelper {
         contentValues.put(COL6,item5);
         Log.d(TAG, "addData: Adding "+ item + " , "+ item2 + " , "+ item3 + " , "+ item4 + " , "+ item5 + " to "+ TABLE_NAME);
         long result=db.insert(TABLE_NAME,null,contentValues);
-        db.close();
         if (result ==-1){
             return false;
         }else{
