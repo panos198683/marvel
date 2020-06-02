@@ -85,9 +85,11 @@ public class CharactersActivity extends AppCompatActivity  {
 
     public void setcharacter(int position, ArrayList<ListItem> charsList){
         Intent intent = new Intent(this, SetCharacter.class);
+        Bundle extra = new Bundle();
+        extra.putSerializable("charsList", charsList);
         intent.putExtra("nickname",playername.getText());
         intent.putExtra("position",position);
-        intent.putExtra("charsList",charsList);
+        intent.putExtra("extra",extra);
         startActivity(intent);
     }
     public void filllist(){
@@ -106,6 +108,7 @@ public class CharactersActivity extends AppCompatActivity  {
             @Override
             public void onItemClick(int position){
                 charsList.get(position);
+                setcharacter(position,charsList);
 
             }
         });

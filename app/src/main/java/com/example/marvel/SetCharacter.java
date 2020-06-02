@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class SetCharacter extends AppCompatActivity {
 
     @Override
@@ -12,6 +14,7 @@ public class SetCharacter extends AppCompatActivity {
         setContentView(R.layout.activity_setcharacter);
         getIntent().getStringExtra("nickname");
         getIntent().getStringExtra("position");
-        getIntent().getStringExtra("charlist");
+        Bundle extra = getIntent().getBundleExtra("extra");
+        ArrayList<ListItem> charsList = (ArrayList<ListItem>) extra.getSerializable("charslist");
     }
 }
