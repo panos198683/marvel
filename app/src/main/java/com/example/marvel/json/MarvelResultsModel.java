@@ -1,9 +1,12 @@
 package com.example.marvel.json;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.List;
 
-public class MarvelResultsModel {
+public class MarvelResultsModel implements Parcelable {
     private int id;
     private String name;
     private String description;
@@ -15,6 +18,25 @@ public class MarvelResultsModel {
     private JsonStoriesModel stories;
     private JsonEventsModel events;
     private List<JsonUrlsModel> urls;
+
+    protected MarvelResultsModel(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        recourceURI = in.readString();
+    }
+
+    public static final Creator<MarvelResultsModel> CREATOR = new Creator<MarvelResultsModel>() {
+        @Override
+        public MarvelResultsModel createFromParcel(Parcel in) {
+            return new MarvelResultsModel(in);
+        }
+
+        @Override
+        public MarvelResultsModel[] newArray(int size) {
+            return new MarvelResultsModel[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -104,284 +126,21 @@ public class MarvelResultsModel {
         this.urls = urls;
     }
 
-    public class JsonthumbnailModel {
-        private String path;
-        private String extension;
-
-        public String getPath() {
-            return path;
-        }
-
-        public void setPath(String path) {
-            this.path = path;
-        }
-
-        public String getExtension() {
-            return extension;
-        }
-
-        public void setExtension(String extension) {
-            this.extension = extension;
-        }
-    }
-    public class JsonComicModel {
-        private int available;
-        private String recourceURI;
-        private List<ComicItems> items;
-        private int returned;
-
-        public int getAvailable() {
-            return available;
-        }
-
-        public void setAvailable(int available) {
-            this.available = available;
-        }
-
-        public String getRecourceURI() {
-            return recourceURI;
-        }
-
-        public void setRecourceURI(String recourceURI) {
-            this.recourceURI = recourceURI;
-        }
-
-        public List<ComicItems> getItems() {
-            return items;
-        }
-
-        public void setItems(List<ComicItems> items) {
-            this.items = items;
-        }
-
-        public int getReturned() {
-            return returned;
-        }
-
-        public void setReturned(int returned) {
-            this.returned = returned;
-        }
-
-        public class ComicItems{
-            private String recourceURI;
-            private String name;
-
-            public String getRecourceURI() {
-                return recourceURI;
-            }
-
-            public void setRecourceURI(String recourceURI) {
-                this.recourceURI = recourceURI;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public class JsonSeriesModel{
-        private int available;
-        private String collectionURI;
-        private List<SeriesItems> items;
-        private int returned;
-
-        public int getAvailable() {
-            return available;
-        }
-
-        public void setAvailable(int available) {
-            this.available = available;
-        }
-
-        public String getCollectionURI() {
-            return collectionURI;
-        }
-
-        public void setCollectionURI(String collectionURI) {
-            this.collectionURI = collectionURI;
-        }
-
-        public List<SeriesItems> getItems() {
-            return items;
-        }
-
-        public void setItems(List<SeriesItems> items) {
-            this.items = items;
-        }
-
-        public int getReturned() {
-            return returned;
-        }
-
-        public void setReturned(int returned) {
-            this.returned = returned;
-        }
-
-        public class SeriesItems{
-            private String recourceURI;
-            private String name;
-
-            public String getRecourceURI() {
-                return recourceURI;
-            }
-
-            public void setRecourceURI(String recourceURI) {
-                this.recourceURI = recourceURI;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(recourceURI);
     }
 
-    public class JsonStoriesModel{
-        private int available;
-        private String collectionURI;
-        private List<StoriesItems> items;
 
-        public int getAvailable() {
-            return available;
-        }
 
-        public void setAvailable(int available) {
-            this.available = available;
-        }
 
-        public String getCollectionURI() {
-            return collectionURI;
-        }
 
-        public void setCollectionURI(String collectionURI) {
-            this.collectionURI = collectionURI;
-        }
-
-        public List<StoriesItems> getItems() {
-            return items;
-        }
-
-        public void setItems(List<StoriesItems> items) {
-            this.items = items;
-        }
-
-        public class StoriesItems{
-            private String resourceURI;
-            private String name;
-            private String type;
-
-            public String getResourceURI() {
-                return resourceURI;
-            }
-
-            public void setResourceURI(String resourceURI) {
-                this.resourceURI = resourceURI;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-        }
-    }
-
-    public class JsonEventsModel{
-        private int available;
-        private String collectionURI;
-        private List<EventsItems> items;
-        private int returned;
-
-        public int getAvailable() {
-            return available;
-        }
-
-        public void setAvailable(int available) {
-            this.available = available;
-        }
-
-        public String getCollectionURI() {
-            return collectionURI;
-        }
-
-        public void setCollectionURI(String collectionURI) {
-            this.collectionURI = collectionURI;
-        }
-
-        public List<EventsItems> getItems() {
-            return items;
-        }
-
-        public void setItems(List<EventsItems> items) {
-            this.items = items;
-        }
-
-        public int getReturned() {
-            return returned;
-        }
-
-        public void setReturned(int returned) {
-            this.returned = returned;
-        }
-
-        public class EventsItems{
-            private String resourceURI;
-            private String name;
-
-            public String getResourceURI() {
-                return resourceURI;
-            }
-
-            public void setResourceURI(String resourceURI) {
-                this.resourceURI = resourceURI;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
-    }
-
-    public class JsonUrlsModel{
-        private String type;
-        private String url;
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
 }

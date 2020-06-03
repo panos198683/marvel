@@ -83,13 +83,15 @@ public class CharactersActivity extends AppCompatActivity  {
 
     }
 
-    public void setcharacter(int position, ArrayList<ListItem> charsList){
+    public void setcharacter(int position){
         Intent intent = new Intent(this, SetCharacter.class);
-        Bundle extra = new Bundle();
-        extra.putSerializable("charsList", charsList);
         intent.putExtra("nickname",playername.getText());
         intent.putExtra("position",position);
-        intent.putExtra("extra",extra);
+        intent.putExtra("characterdata",model.getData().getResults().get(position));
+        intent.putExtra("charactercomics",model.getData().getResults().get(position).getComics());
+        intent.putExtra("characterseries",model.getData().getResults().get(position).getSeries());
+        intent.putExtra("characterstories",model.getData().getResults().get(position).getStories());
+        intent.putExtra("characterevents",model.getData().getResults().get(position).getEvents());
         startActivity(intent);
     }
     public void filllist(){
@@ -108,7 +110,7 @@ public class CharactersActivity extends AppCompatActivity  {
             @Override
             public void onItemClick(int position){
                 charsList.get(position);
-                setcharacter(position,charsList);
+                setcharacter(position);
 
             }
         });
