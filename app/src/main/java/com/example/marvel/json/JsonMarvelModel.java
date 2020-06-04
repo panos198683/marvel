@@ -21,6 +21,7 @@ public class JsonMarvelModel implements Parcelable {
         attributionText = in.readString();
         attributionHTML = in.readString();
         etag = in.readString();
+        data = in.readParcelable(JsonDataModel.class.getClassLoader());
     }
 
     public static final Creator<JsonMarvelModel> CREATOR = new Creator<JsonMarvelModel>() {
@@ -104,6 +105,7 @@ public class JsonMarvelModel implements Parcelable {
         dest.writeString(attributionText);
         dest.writeString(attributionHTML);
         dest.writeString(etag);
+        dest.writeParcelable(data,1);
     }
 
 }

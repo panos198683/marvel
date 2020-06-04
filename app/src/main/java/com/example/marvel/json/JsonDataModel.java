@@ -1,5 +1,6 @@
 package com.example.marvel.json;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -83,6 +84,8 @@ public class JsonDataModel implements Parcelable {
         dest.writeInt(limit);
         dest.writeInt(total);
         dest.writeInt(count);
-        dest.writeTypedList(results);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            dest.writeParcelableList(results,2);
+        }
     }
 }
