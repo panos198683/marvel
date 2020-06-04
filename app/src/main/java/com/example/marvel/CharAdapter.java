@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,13 +15,49 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import java.util.ArrayList;
 
-public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder> {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder> implements Filterable {
     private Context context;
 
     private ArrayList<ListItem> charactersList;
+    private ArrayList<ListItem> charactersListAll;
     private OnItemClickListener charListener;
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<ListItem> filteredList = new ArrayList<>();
+            if(constraint.toString().isEmpty()){
+                filteredList.addAll(charactersListAll);
+            }else
+            {
+                for (ListItem character: charactersListAll ){
+                    if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filteredList.add(character);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            charactersList.clear();
+            charactersList.addAll((Collection<? extends ListItem>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -28,6 +66,7 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         public ImageView favImage;
         public TextView charName;
         public Bitmap bitmap;
+
 
 
         public charViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
@@ -52,6 +91,7 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
 
     public CharAdapter(ArrayList<ListItem> charsList) {
         charactersList = charsList;
+        this.charactersListAll= new ArrayList<>(charsList);
     }
 
 

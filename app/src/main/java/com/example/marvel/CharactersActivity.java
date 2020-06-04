@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 public class CharactersActivity extends AppCompatActivity  {
     JsonMarvelModel model;
     TextView playername;
+    SearchView searchbar;
     private RecyclerView charRecyclerView;
     private CharAdapter charAdapter;
     private RecyclerView.LayoutManager charLayoutManager;
@@ -38,6 +40,19 @@ public class CharactersActivity extends AppCompatActivity  {
         playername=findViewById(R.id.PlayerName);
         String nickname=getIntent().getStringExtra("nickname");
         playername.setText(nickname);
+        searchbar = findViewById(R.id.SearchView);
+        searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                charAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -79,19 +94,16 @@ public class CharactersActivity extends AppCompatActivity  {
 
         queue.add(stringRequest);
 
-
-
     }
 
-    public void setcharacter(int position){
+    public void setcharacter(int pos){
         Intent intent = new Intent(this, SetCharacter.class);
         intent.putExtra("nickname",playername.getText());
-        intent.putExtra("position",position);
-        intent.putExtra("characterdata",model.getData().getResults().get(position));
-        intent.putExtra("charactercomics",model.getData().getResults().get(position).getComics());
-        intent.putExtra("characterseries",model.getData().getResults().get(position).getSeries());
-        intent.putExtra("characterstories",model.getData().getResults().get(position).getStories());
-        intent.putExtra("characterevents",model.getData().getResults().get(position).getEvents());
+        intent.putExtra("characterdata",model.getData().getResults().get(pos));
+        intent.putExtra("charactercomics",model.getData().getResults().get(pos).getComics());
+        intent.putExtra("characterseries",model.getData().getResults().get(pos).getSeries());
+        intent.putExtra("characterstories",model.getData().getResults().get(pos).getStories());
+        intent.putExtra("characterevents",model.getData().getResults().get(pos).getEvents());
         startActivity(intent);
     }
     public void filllist(){
@@ -102,19 +114,17 @@ public class CharactersActivity extends AppCompatActivity  {
             String charname;
             charname = model.getData().getResults().get(i).getName();
             iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
-            charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname));
+            charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname,i));
         }
         charAdapter = new CharAdapter(charsList);
         charRecyclerView.setAdapter(charAdapter);
         charAdapter.setOnItemClickListener(new CharAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int position){
-                charsList.get(position);
-                setcharacter(position);
+                int pos=charsList.get(position).getPos();
+                setcharacter(pos);
 
             }
         });
     }
-
-
 }

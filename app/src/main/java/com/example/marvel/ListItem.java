@@ -4,10 +4,20 @@ public class ListItem {
     private String characterImageResource;
     private int favouriteImageResource;
     private String charName;
-    public ListItem(String characterImageResource,int favouriteImageResource, String charName){
+    private int pos;
+    public ListItem(String characterImageResource,int favouriteImageResource, String charName, int pos){
         this.characterImageResource = characterImageResource;
         this.favouriteImageResource = favouriteImageResource;
         this.charName = charName;
+        this.pos = pos;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 
     public String getCharacterImageResource() {
