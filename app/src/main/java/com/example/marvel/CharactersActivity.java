@@ -91,7 +91,6 @@ public class CharactersActivity extends AppCompatActivity  {
                 error.printStackTrace();
             }
         });
-
         queue.add(stringRequest);
 
     }
@@ -100,6 +99,7 @@ public class CharactersActivity extends AppCompatActivity  {
         Intent intent = new Intent(this, SetCharacter.class);
         intent.putExtra("nickname",playername.getText());
         intent.putExtra("characterdata",model.getData().getResults().get(pos));
+        intent.putExtra("characterthumbnail",model.getData().getResults().get(pos).getThumbnail());
         intent.putExtra("charactercomics",model.getData().getResults().get(pos).getComics());
         intent.putExtra("characterseries",model.getData().getResults().get(pos).getSeries());
         intent.putExtra("characterstories",model.getData().getResults().get(pos).getStories());
@@ -115,6 +115,7 @@ public class CharactersActivity extends AppCompatActivity  {
             charname = model.getData().getResults().get(i).getName();
             iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
             charsList.add(new ListItem(iconpath,R.drawable.favouriteicon,charname,i));
+            //charsList.add(new ListItem(iconpath,0,charname,i));
         }
         charAdapter = new CharAdapter(charsList);
         charRecyclerView.setAdapter(charAdapter);

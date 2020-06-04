@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+        android:id="@+id/backbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/backarrow"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/PlayerName"
+        />
+
     <TextView
         android:id="@+id/PlayerName"
         android:layout_width="wrap_content"
@@ -12,23 +24,66 @@
         android:text="User Nickname"
         android:textColor="#ffffff"
         android:layout_marginTop="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/backbtn"
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center"
         />
+    <ImageView
+        android:id="@+id/favouriteicon"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/favouriteiconempty"
+        app:layout_constraintTop_toBottomOf="@+id/PlayerName"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="32dp"
+        />
+
     <TextView
         android:id="@+id/charactername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="User Nickname"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="35dp"
+        android:text="Character Name"
         android:textColor="#ffffff"
-        android:layout_marginTop="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintTop_toTopOf="@+id/charimage"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/charimage"
+        app:layout_constraintBottom_toBottomOf="@+id/charimage"
         android:gravity="center"
         />
+    <ImageView
+        android:id="@+id/charimage"
+        android:src="@drawable/gmailicon"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/favouriteicon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"/>
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="20dp"
+        android:textSize="25dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/radius"
+        app:layout_constraintTop_toBottomOf="@+id/charimage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="gf \nvcfd \nsfsdf"
+        android:gravity="center"
+        />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
