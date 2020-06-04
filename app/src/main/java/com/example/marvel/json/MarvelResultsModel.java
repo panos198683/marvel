@@ -1,5 +1,6 @@
 package com.example.marvel.json;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -24,6 +25,11 @@ public class MarvelResultsModel implements Parcelable {
         name = in.readString();
         description = in.readString();
         recourceURI = in.readString();
+        thumbnail = in.readParcelable( JsonthumbnailModel.class.getClassLoader());
+        comics = in.readParcelable( JsonComicModel.class.getClassLoader());
+        series = in.readParcelable( JsonSeriesModel.class.getClassLoader());
+        stories = in.readParcelable( JsonStoriesModel.class.getClassLoader());
+        events = in.readParcelable( JsonEventsModel.class.getClassLoader());
     }
 
     public static final Creator<MarvelResultsModel> CREATOR = new Creator<MarvelResultsModel>() {
@@ -137,6 +143,11 @@ public class MarvelResultsModel implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(recourceURI);
+        dest.writeParcelable(thumbnail,3);
+        dest.writeParcelable(comics,3);
+        dest.writeParcelable(series,3);
+        dest.writeParcelable(stories,3);
+        dest.writeParcelable(events,3);
     }
 
 

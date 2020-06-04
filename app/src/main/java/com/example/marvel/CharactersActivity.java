@@ -99,11 +99,6 @@ public class CharactersActivity extends AppCompatActivity  {
         Intent intent = new Intent(this, SetCharacter.class);
         intent.putExtra("nickname",playername.getText());
         intent.putExtra("characterdata",model.getData().getResults().get(pos));
-        intent.putExtra("characterthumbnail",model.getData().getResults().get(pos).getThumbnail());
-        intent.putExtra("charactercomics",model.getData().getResults().get(pos).getComics());
-        intent.putExtra("characterseries",model.getData().getResults().get(pos).getSeries());
-        intent.putExtra("characterstories",model.getData().getResults().get(pos).getStories());
-        intent.putExtra("characterevents",model.getData().getResults().get(pos).getEvents());
         startActivity(intent);
     }
     public void filllist(){

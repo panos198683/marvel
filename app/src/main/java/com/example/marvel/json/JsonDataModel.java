@@ -19,6 +19,9 @@ public class JsonDataModel implements Parcelable {
         total = in.readInt();
         count = in.readInt();
         results = in.createTypedArrayList(MarvelResultsModel.CREATOR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            in.readParcelableList( results , MarvelResultsModel.class.getClassLoader());
+        }
     }
 
     public static final Creator<JsonDataModel> CREATOR = new Creator<JsonDataModel>() {

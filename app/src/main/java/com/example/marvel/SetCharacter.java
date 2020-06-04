@@ -64,14 +64,9 @@ public class SetCharacter extends AppCompatActivity {
         Intent intent = getIntent();
         nickname.setText(intent.getStringExtra("nickname"));
         MarvelResultsModel character = intent.getParcelableExtra("characterdata");
-        JsonthumbnailModel path = intent.getParcelableExtra("characterthumbnail");
-        JsonComicModel comics = intent.getParcelableExtra("charactercomics");
-        JsonSeriesModel series = intent.getParcelableExtra("characterseries");
-        JsonStoriesModel stories = intent.getParcelableExtra("characterstories");
-        JsonEventsModel events = intent.getParcelableExtra("characterevents");
         charname.setText(character.getName());
         String fullpath;
-        fullpath= path.getPath() + "." + path.getExtension();
+        fullpath= character.getThumbnail().getPath() + "." + character.getThumbnail().getExtension();
         Glide.with(this).load(fullpath).into(charimage);
         if(!character.getDescription().equals("")) {
             description.setText(character.getDescription());
