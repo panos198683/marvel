@@ -1,5 +1,6 @@
 package com.example.marvel.json;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,6 +16,8 @@ public class JsonComicModel implements Parcelable {
         available = in.readInt();
         recourceURI = in.readString();
         returned = in.readInt();
+        items = in.createTypedArrayList(ComicItems.CREATOR);
+
     }
 
     public static final Creator<JsonComicModel> CREATOR = new Creator<JsonComicModel>() {
@@ -71,26 +74,8 @@ public class JsonComicModel implements Parcelable {
         dest.writeInt(available);
         dest.writeString(recourceURI);
         dest.writeInt(returned);
+        dest.writeTypedList(this.items);
+
     }
 
-    public class ComicItems{
-        private String recourceURI;
-        private String name;
-
-        public String getRecourceURI() {
-            return recourceURI;
-        }
-
-        public void setRecourceURI(String recourceURI) {
-            this.recourceURI = recourceURI;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
 }

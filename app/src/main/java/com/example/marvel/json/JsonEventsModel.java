@@ -1,5 +1,6 @@
 package com.example.marvel.json;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,6 +16,8 @@ public class JsonEventsModel implements Parcelable {
         available = in.readInt();
         collectionURI = in.readString();
         returned = in.readInt();
+        items = in.createTypedArrayList(EventsItems.CREATOR);
+
     }
 
     public static final Creator<JsonEventsModel> CREATOR = new Creator<JsonEventsModel>() {
@@ -71,26 +74,9 @@ public class JsonEventsModel implements Parcelable {
         dest.writeInt(available);
         dest.writeString(collectionURI);
         dest.writeInt(returned);
+        dest.writeTypedList(items);
+
     }
 
-    public class EventsItems{
-        private String resourceURI;
-        private String name;
 
-        public String getResourceURI() {
-            return resourceURI;
-        }
-
-        public void setResourceURI(String resourceURI) {
-            this.resourceURI = resourceURI;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
 }

@@ -22,6 +22,7 @@ public class JsonMarvelModel implements Parcelable {
         attributionHTML = in.readString();
         etag = in.readString();
         data = in.readParcelable(JsonDataModel.class.getClassLoader());
+
     }
 
     public static final Creator<JsonMarvelModel> CREATOR = new Creator<JsonMarvelModel>() {

@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class MarvelResultsModel implements Parcelable {
         series = in.readParcelable( JsonSeriesModel.class.getClassLoader());
         stories = in.readParcelable( JsonStoriesModel.class.getClassLoader());
         events = in.readParcelable( JsonEventsModel.class.getClassLoader());
+        urls = in.createTypedArrayList(JsonUrlsModel.CREATOR);
+
     }
 
     public static final Creator<MarvelResultsModel> CREATOR = new Creator<MarvelResultsModel>() {
@@ -148,6 +151,9 @@ public class MarvelResultsModel implements Parcelable {
         dest.writeParcelable(series,3);
         dest.writeParcelable(stories,3);
         dest.writeParcelable(events,3);
+        dest.writeTypedList(this.urls);
+
+
     }
 
 
