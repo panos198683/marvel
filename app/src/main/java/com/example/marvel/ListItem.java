@@ -1,5 +1,7 @@
 package com.example.marvel;
 
+import androidx.lifecycle.ViewModel;
+
 public class ListItem {
     private String characterImageResource;
     private int favouriteImageResource;

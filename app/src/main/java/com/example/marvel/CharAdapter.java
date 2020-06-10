@@ -58,6 +58,9 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         }
     };
 
+    public void notifydatachange(ArrayList<ListItem> charslist){
+        List<ListItem> filteredList = new ArrayList<>();
+    }
     public interface OnItemClickListener{
         void onItemClick(int position);
     }

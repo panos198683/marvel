@@ -3,6 +3,8 @@ package com.example.marvel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +48,7 @@ public class CharactersActivity extends AppCompatActivity  {
     DatabaseReference reference;
     String nickname;
     ArrayList<ListItem> charsList;
+    List<String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class CharactersActivity extends AppCompatActivity  {
         playername=findViewById(R.id.PlayerName);
         nickname=getIntent().getStringExtra("nickname");
         playername.setText(nickname);
+        charsList = new ArrayList<>();
         searchbar = findViewById(R.id.SearchView);
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -68,7 +72,6 @@ public class CharactersActivity extends AppCompatActivity  {
             }
         });
     }
-
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -117,13 +120,22 @@ public class CharactersActivity extends AppCompatActivity  {
     }
     public void filllist(){
         int countlist= model.getData().getResults().size();
-        charsList = new ArrayList<>();
+
         for (int i=0;i<countlist;i++) {
             String iconpath;
             String charname;
-            findfavourite(model.getData().getResults().get(i).getId(),i);
+            imageresource=0;
             charname = model.getData().getResults().get(i).getName();
             iconpath = model.getData().getResults().get(i).getThumbnail().getPath() + '.'+ model.getData().getResults().get(i).getThumbnail().getExtension();
+//            for(String x:data){
+//                int id = model.getData().getResults().get(i).getId();
+//                if(x.equals(String.valueOf(id))){
+//                    imageresource=R.id.favouriteicon;
+//                }
+//                else{
+//                    imageresource=0;
+//                }
+//            }
             charsList.add(new ListItem(iconpath,imageresource,charname,i));
 
         }
@@ -137,27 +149,55 @@ public class CharactersActivity extends AppCompatActivity  {
 
             }
         });
+        findfavourite();
+
 
     }
-    public void findfavourite(int id,final int i) {
-        final String fullid = String.valueOf(id);
+    public void setfavourites(){
+        for (int i=0;i<model.getData().getResults().size();i++) {
+            for(String x:data){
+                int id = model.getData().getResults().get(i).getId();
+                if(x.equals(String.valueOf(id))){
+                    charsList.get(i).setFavouriteImageResource(R.id.favouriteicon);
+
+                }
+            }
+        }
+        //charAdapter.notifydatachange(charsList);
+    }
+
+    public void findfavourite() {
+        data= new ArrayList<>();
         firebase = FirebaseDatabase.getInstance();
-        reference = firebase.getReference().child("favourites").child(nickname).child(fullid);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference = firebase.getReference().child("favourites").child(nickname);
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    String isfav = dataSnapshot.getValue(String.class);
-                    if (isfav.equals(fullid)) {
-                        charsList.get(i).setFavouriteImageResource(R.drawable.favouriteicon);
-                    }
-                } catch (Exception e) {
+
+                for(DataSnapshot x:dataSnapshot.getChildren()){
+
+                    data.add(x.getValue().toString());
                 }
+
+                //setfavourites();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void buildRecyclerView(){
+
+        charAdapter = new CharAdapter(charsList);
+        charRecyclerView.setAdapter(charAdapter);
+        charAdapter.setOnItemClickListener(new CharAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position){
+                int pos=charsList.get(position).getPos();
+                setcharacter(pos);
 
             }
         });
