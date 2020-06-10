@@ -1,5 +1,6 @@
 package com.example.marvel;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.marvel.json.MarvelResultsModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class SetCharacter extends AppCompatActivity {
 
@@ -18,6 +25,8 @@ public class SetCharacter extends AppCompatActivity {
     boolean selection;
     int selectedtab;
     MarvelResultsModel character;
+    FirebaseDatabase firebase;
+    DatabaseReference reference;
     ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,7 @@ public class SetCharacter extends AppCompatActivity {
         Intent intent = getIntent();
         nickname.setText(intent.getStringExtra("nickname"));
         character = intent.getParcelableExtra("characterdata");
+        findfavourite();
         charname.setText(character.getName());
         String fullpath;
         fullpath= character.getThumbnail().getPath() + "." + character.getThumbnail().getExtension();
@@ -61,10 +71,12 @@ public class SetCharacter extends AppCompatActivity {
                 if (selection){
                     selection=false;
                     favouriteicon.setImageResource(R.drawable.favouriteiconempty);
+                    removefavourite();
                 }else
                 {
                     selection=true;
                     favouriteicon.setImageResource(R.drawable.favouriteicon);
+                    addfavourite();
                 }
             }
         });
@@ -175,5 +187,52 @@ public class SetCharacter extends AppCompatActivity {
             }
             selectedtab=tab;
         }
+    }
+    public void addfavourite(){
+        firebase = FirebaseDatabase.getInstance();
+        reference = firebase.getReference();
+        String charid=String.valueOf(character.getId());
+        reference.child("favourites").child(nickname.getText().toString()).child(charid).setValue(charid);
+    }
+    public void removefavourite(){
+        firebase = FirebaseDatabase.getInstance();
+        reference = firebase.getReference();
+        String charid=String.valueOf(character.getId());
+        reference.child("favourites").child(nickname.getText().toString()).child(charid).removeValue();
+    }
+
+    public void findfavourite(){
+        String fullid=String.valueOf(character.getId());
+        firebase = FirebaseDatabase.getInstance();
+        reference=firebase.getReference().child("favourites").child(nickname.getText().toString()).child(fullid);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try{
+                    String isfav = dataSnapshot.getValue(String.class);
+                    if(isfav.equals(String.valueOf(character.getId()))){
+                        favouriteicon.setImageResource(R.drawable.favouriteicon);
+                        selection=true;
+                    }
+                    else{
+                        favouriteicon.setImageResource(R.drawable.favouriteiconempty);
+                        selection=false;
+                    }
+                }catch(Exception e){
+                    favouriteicon.setImageResource(R.drawable.favouriteiconempty);
+                    selection=false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                favouriteicon.setImageResource(R.drawable.favouriteiconempty);
+                selection=false;
+
+            }
+        });
+
+
+
     }
 }

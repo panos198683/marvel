@@ -1,5 +1,6 @@
 package com.example.marvel;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,14 +13,17 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
-    //private FirebaseAuth mAuth;
+    FirebaseDatabase firebase;
+    DatabaseReference reference;
     TextInputEditText editText1,editText2;
     TextView ErrorAnnouncer;
     DatabaseData mDatabaseHelper;
@@ -28,18 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //mAuth = FirebaseAuth.getInstance();
+
         editText1=findViewById(R.id.editText1);
         editText2=findViewById(R.id.editText2);
 
         ErrorAnnouncer = findViewById(R.id.layoutannouncer);
 
         mDatabaseHelper= new DatabaseData(this);
-//        FirebaseUser currentUser =mAuth.getCurrentUser();
-//        if(currentUser==null)
-//            ErrorAnnouncer.setText("NO USER YET");
-//        ErrorAnnouncer.setTextColor(Color.parseColor("#ffffff"));
-
         Button btn = findViewById(R.id.buttonlogin);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,21 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void signinuser(View view){
-//        mAuth.signInWithEmailAndPassword(editText1.getText().toString(),
-//                editText2.getText().toString())
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            textView.setText(user.getUid());
-//                            //mAuth.signOut();
-//                        }
-//                        else{
-//                            textView.setText("failed to log in.");
-//                        }
-//                    }
-//                });
+
         String email,password;
         email=editText1.getText().toString();
         password=editText2.getText().toString();
@@ -100,35 +85,54 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Loginchecker(String email,String password){
-        Cursor data = mDatabaseHelper.getData(email,password);
-        String nickname="";
-        boolean founder=false;
-        if(data.moveToFirst()) {
-            founder=true;
-            nickname=data.getString(0);
-        }
-        if (founder==true){
-            Intent intent = new Intent(this, CharactersActivity.class);
-            intent.putExtra("nickname",nickname);
-            startActivity(intent);
-        }
-        else{
-            ErrorAnnouncer.setText("Wrong Username or Password");
-        }
+    public void Loginchecker(String email, final String password){
+//        Cursor data = mDatabaseHelper.getData(email,password);
+//        String nickname="";
+//        boolean founder=false;
+//        if(data.moveToFirst()) {
+//            founder=true;
+//            nickname=data.getString(0);
+//        }
+//        if (founder==true){
+//            Intent intent = new Intent(this, CharactersActivity.class);
+//            intent.putExtra("nickname",nickname);
+//            startActivity(intent);
+//        }
+//        else{
+//            ErrorAnnouncer.setText("Wrong Username or Password");
+//        }
+        firebase = FirebaseDatabase.getInstance();
+        reference=firebase.getReference("users");
+        Query checkUser = reference.orderByChild("email").equalTo(email);
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String passwordFromDB = dataSnapshot.child("email").child("password").getValue(String.class);
+                    if(passwordFromDB.equals(password)){
+                        String nickname;
+                        nickname = dataSnapshot.child("email").child("nickname").getValue(String.class);
+                        nextpage(nickname);
+                    }
+                    else{
+                        ErrorAnnouncer.setText("Wrong Creditentials");
+                    }
+                }
+                else{
+                    ErrorAnnouncer.setText("Wrong Creditentials");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
+            }
+        });
     }
-
-
-    public void toastMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    public void nextpage(String nickname){
+        Intent intent = new Intent(this, CharactersActivity.class);
+        intent.putExtra("nickname",nickname);
+        startActivity(intent);
     }
-
-    public void cleardtbs(View view){
-        mDatabaseHelper.cleartable();
-    }
-
 
 
 }
