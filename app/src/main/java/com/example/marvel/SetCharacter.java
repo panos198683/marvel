@@ -2,7 +2,12 @@ package com.example.marvel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -211,6 +216,19 @@ public class SetCharacter extends AppCompatActivity {
         reference = firebase.getReference();
         String charid=String.valueOf(character.getId());
         reference.child("favourites").child(nickname.getText().toString()).child(charid).setValue(charid);
+        String message = "You just added " + character.getName()+  " to your favourite marvel characters!";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(SetCharacter.this)
+                .setSmallIcon(R.drawable.marvelpedialogolow).setContentTitle("MARVEL-PEDIA")
+                .setContentText(message)
+                .setAutoCancel(true);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(SetCharacter.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager)getSystemService(
+                Context.NOTIFICATION_SERVICE
+        );
+        notificationManager.notify(0,builder.build());
     }
     public void removefavourite(){
         firebase = FirebaseDatabase.getInstance();
