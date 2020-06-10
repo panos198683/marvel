@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SetCharacter extends AppCompatActivity {
 
     TextView nickname, description, charname, textbox, comicstxt, seriestxt, storiestxt, eventstxt;
-    ImageView favouriteicon, backbtn, charimage;
+    ImageView favouriteicon, backbtn, charimage,sharebtn;
     boolean selection;
     int selectedtab;
     MarvelResultsModel character;
@@ -37,6 +39,7 @@ public class SetCharacter extends AppCompatActivity {
         nickname = findViewById(R.id.PlayerName);
         charname = findViewById(R.id.charactername);
         backbtn = findViewById(R.id.backbtn);
+        sharebtn = findViewById(R.id.sharebtn);
         description = findViewById(R.id.description);
         charimage = findViewById(R.id.charimage);
         favouriteicon = findViewById(R.id.favouriteicon);
@@ -105,6 +108,21 @@ public class SetCharacter extends AppCompatActivity {
             }
         });
         tabssetup(0);
+        sharebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareSub = character.getName();
+                String shareBody = character.getDescription();
+                String ShareImageLink = character.getThumbnail().getExtension()+"."+character.getThumbnail().getPath();
+                //String htmlimage= "<img src=\""+ShareImageLink+"\"alt=\"Marvel Hero\">";
+                //shareBody=htmlimage + " "+ shareBody;
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(myIntent,"Share using"));
+            }
+        });
     }
 
     public void initialization(){
@@ -231,8 +249,7 @@ public class SetCharacter extends AppCompatActivity {
 
             }
         });
-
-
-
     }
+
+
 }
