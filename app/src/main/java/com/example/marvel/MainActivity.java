@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Loginchecker(String email, final String password){
+    public void Loginchecker(final String email, final String password){
 //        Cursor data = mDatabaseHelper.getData(email,password);
 //        String nickname="";
 //        boolean founder=false;
@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String passwordFromDB = dataSnapshot.child("email").child("password").getValue(String.class);
+                    String passwordFromDB = dataSnapshot.child(email).child("password").getValue(String.class);
                     if(passwordFromDB.equals(password)){
                         String nickname;
-                        nickname = dataSnapshot.child("email").child("nickname").getValue(String.class);
+                        nickname = dataSnapshot.child(email).child("nickname").getValue(String.class);
                         nextpage(nickname);
                     }
                     else{
