@@ -48,8 +48,8 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
 
     }
     public void gotosignin(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Toast.makeText(this,"Success!",Toast.LENGTH_LONG);
+        finish();
 
     }
 
@@ -80,31 +80,10 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
         user = new User(firstname,lastname,email,password,nickname);
         firebase = FirebaseDatabase.getInstance();
         reference = firebase.getReference();
-        reference.child("users").child(user.getEmail()).setValue(user);
+        reference.child("users").child(user.getNickname()).setValue(user);
     }
 
     private void userdetails(EditText firstname, EditText lastname, EditText nickname){
-//        user.setFirstname(firstname.getText().toString());
-//        user.setLastname(lastname.getText().toString());
-//        user.setNickname(nickname.getText().toString());
-//        //myRef.push().setValue(user);
-//        Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
-
     }
-
-//    private void addUserDetails(String displayName, FirebaseUser user){
-//        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-//                .setDisplayName(displayName)
-//                .build();
-//        user.updateProfile(profileChangeRequest)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-//    }
 
 }
