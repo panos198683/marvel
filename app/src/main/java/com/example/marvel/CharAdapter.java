@@ -24,7 +24,7 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
 
     private ArrayList<ListItem> charactersList;
     private ArrayList<ListItem> charactersListAll;
-    private ArrayList<ListItem> favoriteCharacter;
+    private ArrayList<ListItem> favoriteCharacter = new ArrayList<>();
     private OnItemClickListener charListener;
 
     @Override
