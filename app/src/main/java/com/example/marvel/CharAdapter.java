@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -25,6 +24,7 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
 
     private ArrayList<ListItem> charactersList;
     private ArrayList<ListItem> charactersListAll;
+    private ArrayList<ListItem> favoriteCharacter;
     private OnItemClickListener charListener;
 
     @Override
@@ -58,9 +58,40 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         }
     };
 
-    public void notifydatachange(ArrayList<ListItem> charslist){
-        List<ListItem> filteredList = new ArrayList<>();
+    public void updateFavorites(List<String> data) {
+        boolean needUpdate = false;
+        for (ListItem item : charactersList) {
+            if (data.contains(String.valueOf(item.getId()))) {
+                item.setFavouriteImageResource(R.drawable.favouriteicon);
+                needUpdate = true;
+            }
+        }
+
+        for (ListItem item : charactersListAll) {
+            if (data.contains(String.valueOf(item.getId()))) {
+                item.setFavouriteImageResource(R.drawable.favouriteicon);
+                favoriteCharacter.add(item);
+            }
+        }
+
+        if (needUpdate) {
+            notifyDataSetChanged();
+        }
     }
+
+    public void showOnlyFavorite(boolean action) {
+        if (action) {
+            charactersList.clear();
+            charactersList.addAll(favoriteCharacter);
+        } else {
+            charactersList.clear();
+            charactersList.addAll(charactersListAll);
+        }
+
+        notifyDataSetChanged();
+    }
+
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }

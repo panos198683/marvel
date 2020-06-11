@@ -1,17 +1,26 @@
 package com.example.marvel;
 
-import androidx.lifecycle.ViewModel;
-
 public class ListItem {
+    private int id;
     private String characterImageResource;
     private int favouriteImageResource;
     private String charName;
     private int pos;
-    public ListItem(String characterImageResource,int favouriteImageResource, String charName, int pos){
+
+    public ListItem(int id, String characterImageResource, String charName, int pos) {
+        this.id = id;
         this.characterImageResource = characterImageResource;
-        this.favouriteImageResource = favouriteImageResource;
+        this.favouriteImageResource = 0;
         this.charName = charName;
         this.pos = pos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPos() {

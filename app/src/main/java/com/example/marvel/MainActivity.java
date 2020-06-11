@@ -3,15 +3,10 @@ package com.example.marvel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,21 +81,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Loginchecker(final String email, final String password){
-//        Cursor data = mDatabaseHelper.getData(email,password);
-//        String nickname="";
-//        boolean founder=false;
-//        if(data.moveToFirst()) {
-//            founder=true;
-//            nickname=data.getString(0);
-//        }
-//        if (founder==true){
-//            Intent intent = new Intent(this, CharactersActivity.class);
-//            intent.putExtra("nickname",nickname);
-//            startActivity(intent);
-//        }
-//        else{
-//            ErrorAnnouncer.setText("Wrong Username or Password");
-//        }
         firebase = FirebaseDatabase.getInstance();
         reference=firebase.getReference("users");
         Query checkUser = reference.orderByChild("email").equalTo(email);
@@ -133,6 +113,4 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("nickname",nickname);
         startActivity(intent);
     }
-
-
 }
