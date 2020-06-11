@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -97,6 +98,10 @@ public class ProfileActivity extends AppCompatActivity {
             reference.child("users").child(nickname.getText().toString()).child("firstname").setValue(first);
             reference.child("users").child(nickname.getText().toString()).child("lastname").setValue(last);
             reference.child("users").child(nickname.getText().toString()).child("password").setValue(pass);
+            Toast.makeText(this,"Saved successfully.",Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(this,"Not all fields were filled!",Toast.LENGTH_LONG).show();
         }
     }
 }

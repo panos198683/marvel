@@ -48,8 +48,8 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
 
     }
     public void gotosignin(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Toast.makeText(this,"Success!",Toast.LENGTH_LONG);
+        finish();
 
     }
 

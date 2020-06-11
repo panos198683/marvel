@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -66,16 +68,17 @@ public class MainActivity extends AppCompatActivity {
         email=editText1.getText().toString();
         password=editText2.getText().toString();
         if (email.length()!=0 && password.length()!=0) {
-            ErrorAnnouncer.setText("");
+            //ErrorAnnouncer.setText("");
             Loginchecker(email, password);
         }
         else{
-            ErrorAnnouncer.setText("A field is not filled!");
+//            ErrorAnnouncer.setText("One or more fields are not filled!");
+            announcer("One or more fields are not filled!");
         }
     }
 
     public void forgotpassword(View view){
-        ErrorAnnouncer.setText("Forgot Password Screen");
+        //ErrorAnnouncer.setText("Forgot Password Screen");
 
 
     }
@@ -95,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
                         nextpage(nickname);
                     }
                     else{
-                        ErrorAnnouncer.setText("Wrong Creditentials");
+                        //ErrorAnnouncer.setText("Wrong Creditentials");
+                        announcer("Wrong Creditentials");
                     }
                 }
                 else{
-                    ErrorAnnouncer.setText("Wrong Creditentials");
+                    //ErrorAnnouncer.setText("Wrong Creditentials");
+                    announcer("Wrong Creditentials");
                 }
             }
             @Override
@@ -112,5 +117,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CharactersActivity.class);
         intent.putExtra("nickname",nickname);
         startActivity(intent);
+    }
+    public void announcer(String message){
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     }
 }
