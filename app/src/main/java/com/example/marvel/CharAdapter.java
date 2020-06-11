@@ -83,6 +83,8 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
             if (data.contains(String.valueOf(item.getId()))) {
                 item.setFavouriteImageResource(R.drawable.favouriteicon);
                 needUpdate = true;
+            }else {
+                item.setFavouriteImageResource(0);
             }
         }
 
@@ -90,6 +92,8 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
             if (data.contains(String.valueOf(item.getId()))) {
                 item.setFavouriteImageResource(R.drawable.favouriteicon);
                 favoriteCharacter.add(item);
+            }else {
+                item.setFavouriteImageResource(0);
             }
         }
 
