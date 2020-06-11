@@ -17,8 +17,19 @@
         android:textColor="#ffffff"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/personimage"
         app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        />
+    <ImageView
+        android:id="@+id/personimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/personvector"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/PlayerName"
+        app:layout_constraintBottom_toBottomOf="@+id/PlayerName"
         android:gravity="center"
         />
 

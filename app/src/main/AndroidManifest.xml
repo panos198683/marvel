@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SetCharacter"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".SetCharacter" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".CharactersActivity" />
         <activity android:name=".MainActivity">

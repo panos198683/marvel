@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -22,9 +21,10 @@ import java.util.List;
 
 public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder> implements Filterable {
     private Context context;
-
+    private boolean favselected = false;
     private ArrayList<ListItem> charactersList;
     private ArrayList<ListItem> charactersListAll;
+    private ArrayList<ListItem> favoriteCharacter = new ArrayList<>();
     private OnItemClickListener charListener;
 
     @Override
@@ -36,14 +36,31 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ListItem> filteredList = new ArrayList<>();
             if(constraint.toString().isEmpty()){
-                filteredList.addAll(charactersListAll);
+                if (favselected){
+                    filteredList.addAll(favoriteCharacter);
+                }
+                else{
+                    filteredList.addAll(charactersListAll);
+                }
+
             }else
             {
-                for (ListItem character: charactersListAll ){
-                    if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
-                        filteredList.add(character);
+                if(favselected)
+                {
+                    for (ListItem character: favoriteCharacter ){
+                        if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                            filteredList.add(character);
+                        }
                     }
                 }
+                else{
+                    for (ListItem character: charactersListAll ){
+                        if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                            filteredList.add(character);
+                        }
+                    }
+                }
+
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
@@ -57,6 +74,42 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
             notifyDataSetChanged();
         }
     };
+
+    public void updateFavorites(List<String> data) {
+        boolean needUpdate = false;
+        for (ListItem item : charactersList) {
+            if (data.contains(String.valueOf(item.getId()))) {
+                item.setFavouriteImageResource(R.drawable.favouriteicon);
+                needUpdate = true;
+            }
+        }
+
+        for (ListItem item : charactersListAll) {
+            if (data.contains(String.valueOf(item.getId()))) {
+                item.setFavouriteImageResource(R.drawable.favouriteicon);
+                favoriteCharacter.add(item);
+            }
+        }
+
+        if (needUpdate) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void showOnlyFavorite(boolean action) {
+        if (action) {
+            favselected = true;
+            charactersList.clear();
+            charactersList.addAll(favoriteCharacter);
+        } else {
+            favselected = false;
+            charactersList.clear();
+            charactersList.addAll(charactersListAll);
+        }
+
+        notifyDataSetChanged();
+    }
+
 
     public interface OnItemClickListener{
         void onItemClick(int position);

@@ -2,9 +2,15 @@ package com.example.marvel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +54,7 @@ public class SetCharacter extends AppCompatActivity {
         seriestxt = findViewById(R.id.series);
         storiestxt = findViewById(R.id.stories);
         eventstxt = findViewById(R.id.events);
+        textbox.setMovementMethod(new ScrollingMovementMethod());
         initialization();
         Intent intent = getIntent();
         nickname.setText(intent.getStringExtra("nickname"));
@@ -160,7 +167,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getComics().getItems().size(); i++) {
                             textinbox = textinbox + character.getComics().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Comics found.");
@@ -172,7 +179,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getSeries().getItems().size(); i++) {
                             textinbox =textinbox + character.getSeries().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Series found.");
@@ -184,7 +191,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getStories().getItems().size(); i++) {
                             textinbox = textinbox + character.getStories().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Stories found.");
@@ -196,7 +203,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getEvents().getItems().size(); i++) {
                             textinbox = textinbox + character.getEvents().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Events found.");
@@ -211,6 +218,22 @@ public class SetCharacter extends AppCompatActivity {
         reference = firebase.getReference();
         String charid=String.valueOf(character.getId());
         reference.child("favourites").child(nickname.getText().toString()).child(charid).setValue(charid);
+        String message = "You just added " + character.getName()+  " to your favourite marvel characters!";
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(SetCharacter.this)
+                .setSmallIcon(R.drawable.marvelpedialogolow).setContentTitle("MARVEL-PEDIA")
+                .setContentText(message)
+                .setAutoCancel(true);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(SetCharacter.this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0,builder.build());
     }
     public void removefavourite(){
         firebase = FirebaseDatabase.getInstance();
