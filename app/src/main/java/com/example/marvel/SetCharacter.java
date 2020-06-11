@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,7 @@ public class SetCharacter extends AppCompatActivity {
         seriestxt = findViewById(R.id.series);
         storiestxt = findViewById(R.id.stories);
         eventstxt = findViewById(R.id.events);
+        textbox.setMovementMethod(new ScrollingMovementMethod());
         initialization();
         Intent intent = getIntent();
         nickname.setText(intent.getStringExtra("nickname"));
@@ -165,7 +167,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getComics().getItems().size(); i++) {
                             textinbox = textinbox + character.getComics().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Comics found.");
@@ -177,7 +179,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getSeries().getItems().size(); i++) {
                             textinbox =textinbox + character.getSeries().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Series found.");
@@ -189,7 +191,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getStories().getItems().size(); i++) {
                             textinbox = textinbox + character.getStories().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Stories found.");
@@ -201,7 +203,7 @@ public class SetCharacter extends AppCompatActivity {
                         for (int i = 0; i < character.getEvents().getItems().size(); i++) {
                             textinbox = textinbox + character.getEvents().getItems().get(i).getName() + "\n\n";
                         }
-                        textbox.setText(textinbox);
+                        textbox.setText(textinbox.substring(0,textinbox.length()-2));
                     }
                     else{
                         textbox.setText("No Events found.");

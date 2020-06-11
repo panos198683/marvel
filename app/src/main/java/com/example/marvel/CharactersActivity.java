@@ -1,8 +1,11 @@
 package com.example.marvel;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
@@ -32,8 +36,9 @@ import java.util.List;
 
 public class CharactersActivity extends AppCompatActivity  {
 
-    TextView playername;
+    TextView playername,favouritebutton,allbutton;
     SearchView searchbar;
+    ImageView personimage;
     private RecyclerView charRecyclerView;
     private CharAdapter charAdapter;
     FirebaseDatabase firebase;
@@ -41,17 +46,21 @@ public class CharactersActivity extends AppCompatActivity  {
     String nickname;
     ArrayList<ListItem> charsList;
     ArrayList<MarvelResultsModel> marvelData;
+    boolean clickedfavourite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_characters);
         playername=findViewById(R.id.PlayerName);
+        personimage=findViewById(R.id.personimage);
         nickname=getIntent().getStringExtra("nickname");
         playername.setText(nickname);
         charsList = new ArrayList<>();
         marvelData = new ArrayList<>();
         searchbar = findViewById(R.id.SearchView);
+        favouritebutton = findViewById(R.id.favourite);
+        allbutton = findViewById(R.id.allchars);
 
         searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -63,6 +72,44 @@ public class CharactersActivity extends AppCompatActivity  {
             public boolean onQueryTextChange(String newText) {
                 charAdapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+        favouritebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!clickedfavourite){
+                    favouritebutton.setTextColor(Color.parseColor("#ffffff"));
+                    allbutton.setTextColor(Color.parseColor("#A4A4A4"));
+                    clickedfavourite=true;
+                    charAdapter.showOnlyFavorite(clickedfavourite);
+                    searchbar.setQuery("",false);
+                    searchbar.clearFocus();
+                }
+            }
+        });
+        allbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickedfavourite){
+                    favouritebutton.setTextColor(Color.parseColor("#A4A4A4"));
+                    allbutton.setTextColor(Color.parseColor("#ffffff"));
+                    clickedfavourite=false;
+                    charAdapter.showOnlyFavorite(clickedfavourite);
+                    searchbar.setQuery("",false);
+                    searchbar.clearFocus();
+                }
+            }
+        });
+        playername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoprofile();
+            }
+        });
+        personimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoprofile();
             }
         });
     }
@@ -101,6 +148,11 @@ public class CharactersActivity extends AppCompatActivity  {
 
     }
 
+    public void gotoprofile(){
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("nickname",playername.getText());
+        startActivityForResult(intent,2000);
+    }
     public void setcharacter(MarvelResultsModel data) {
         Intent intent = new Intent(this, SetCharacter.class);
         intent.putExtra("nickname",playername.getText());
@@ -112,6 +164,8 @@ public class CharactersActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findfavourite();
+        searchbar.setQuery("",false);
+        searchbar.clearFocus();
     }
 
     public void fillList(JsonMarvelModel model) {

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder> implements Filterable {
     private Context context;
-
+    private boolean favselected = false;
     private ArrayList<ListItem> charactersList;
     private ArrayList<ListItem> charactersListAll;
     private ArrayList<ListItem> favoriteCharacter = new ArrayList<>();
@@ -36,14 +36,31 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ListItem> filteredList = new ArrayList<>();
             if(constraint.toString().isEmpty()){
-                filteredList.addAll(charactersListAll);
+                if (favselected){
+                    filteredList.addAll(favoriteCharacter);
+                }
+                else{
+                    filteredList.addAll(charactersListAll);
+                }
+
             }else
             {
-                for (ListItem character: charactersListAll ){
-                    if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
-                        filteredList.add(character);
+                if(favselected)
+                {
+                    for (ListItem character: favoriteCharacter ){
+                        if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                            filteredList.add(character);
+                        }
                     }
                 }
+                else{
+                    for (ListItem character: charactersListAll ){
+                        if (character.getCharName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                            filteredList.add(character);
+                        }
+                    }
+                }
+
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
@@ -81,9 +98,11 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
 
     public void showOnlyFavorite(boolean action) {
         if (action) {
+            favselected = true;
             charactersList.clear();
             charactersList.addAll(favoriteCharacter);
         } else {
+            favselected = false;
             charactersList.clear();
             charactersList.addAll(charactersListAll);
         }
