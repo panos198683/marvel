@@ -80,7 +80,7 @@ EditText firstname,lastname,nickname,emailsu,passwordsu;
         user = new User(firstname,lastname,email,password,nickname);
         firebase = FirebaseDatabase.getInstance();
         reference = firebase.getReference();
-        reference.child("users").child(user.getEmail()).setValue(user);
+        reference.child("users").child(user.getNickname()).setValue(user);
     }
 
     private void userdetails(EditText firstname, EditText lastname, EditText nickname){

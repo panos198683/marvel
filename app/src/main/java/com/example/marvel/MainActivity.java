@@ -80,18 +80,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Loginchecker(final String email, final String password){
+    public void Loginchecker(final String nickname, final String password){
         firebase = FirebaseDatabase.getInstance();
         reference=firebase.getReference("users");
-        Query checkUser = reference.orderByChild("email").equalTo(email);
+        Query checkUser = reference.orderByChild("nickname").equalTo(nickname);
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String passwordFromDB = dataSnapshot.child(email).child("password").getValue(String.class);
+                    String passwordFromDB = dataSnapshot.child(nickname).child("password").getValue(String.class);
                     if(passwordFromDB.equals(password)){
-                        String nickname;
-                        nickname = dataSnapshot.child(email).child("nickname").getValue(String.class);
+//                        String nickname;
+//                        nickname = dataSnapshot.child(nickname).child("nickname").getValue(String.class);
                         nextpage(nickname);
                     }
                     else{
