@@ -113,6 +113,7 @@ public class CharactersActivity extends AppCompatActivity  {
             }
         });
     }
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -120,11 +121,6 @@ public class CharactersActivity extends AppCompatActivity  {
         charRecyclerView = findViewById(R.id.recycleview);
         charRecyclerView.setHasFixedSize(true);
         charRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url2 ="https://gateway.marvel.com/v1/public/characters?ts=1590763605&apikey=85945ebf049310af9b57bdd9b21361ac&hash=2371fd05d862c167376b22e74613e634";
@@ -148,6 +144,7 @@ public class CharactersActivity extends AppCompatActivity  {
 
     }
 
+
     public void gotoprofile(){
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("nickname",playername.getText());
@@ -164,8 +161,6 @@ public class CharactersActivity extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findfavourite();
-        searchbar.setQuery("",false);
-        searchbar.clearFocus();
     }
 
     public void fillList(JsonMarvelModel model) {

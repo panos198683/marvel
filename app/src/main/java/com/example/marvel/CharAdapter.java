@@ -76,6 +76,8 @@ public class CharAdapter extends RecyclerView.Adapter<CharAdapter.charViewHolder
     };
 
     public void updateFavorites(List<String> data) {
+        favoriteCharacter.clear();
+
         boolean needUpdate = false;
         for (ListItem item : charactersList) {
             if (data.contains(String.valueOf(item.getId()))) {
