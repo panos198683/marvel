@@ -1,12 +1,14 @@
 package com.example.marvel;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,8 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     ImageView backbtn;
     TextView nickname;
-    TextInputEditText firstname,lastname,emailsu,passwordsu;
+    EditText firstname,lastname,emailsu,passwordsu;
+    Button savebtn;
     FirebaseDatabase firebase;
     DatabaseReference reference;
 
@@ -39,12 +42,19 @@ public class ProfileActivity extends AppCompatActivity {
         lastname = findViewById(R.id.lastname);
         emailsu = findViewById(R.id.emailsu);
         passwordsu = findViewById(R.id.passwordsu);
+        savebtn = findViewById(R.id.buttonsave);
         Intent intent = getIntent();
         nickname.setText(intent.getStringExtra("nickname"));
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        savebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                savedata();
             }
         });
         getuserdata();
@@ -65,15 +75,28 @@ public class ProfileActivity extends AppCompatActivity {
                 emailsu.setText(data.get(0));
                 firstname.setText(data.get(1));
                 lastname.setText(data.get(2));
-               // passwordsu.setText(data.get(4));
                 passwordsu.setText(data.get(4));
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+
+    public void savedata() {
+        String email,pass,first,last;
+        email=emailsu.getText().toString();
+        first=firstname.getText().toString();
+        last=lastname.getText().toString();
+        pass=passwordsu.getText().toString();
+        if(emailsu.getText().length()>0&&firstname.getText().length()>0&&lastname.getText().length()>0&passwordsu.getText().length()>0)
+        {
+            firebase = FirebaseDatabase.getInstance();
+            reference = firebase.getReference();
+            reference.child("users").child(nickname.getText().toString()).child("email").setValue(email);
+            reference.child("users").child(nickname.getText().toString()).child("firstname").setValue(first);
+            reference.child("users").child(nickname.getText().toString()).child("lastname").setValue(last);
+            reference.child("users").child(nickname.getText().toString()).child("password").setValue(pass);
+        }
     }
 }

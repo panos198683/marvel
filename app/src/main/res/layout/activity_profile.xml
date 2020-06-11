@@ -154,13 +154,13 @@
             android:paddingEnd="20dp"
             android:textColor="#CFCECE"
             android:shape="rectangle"
-            android:id="@+id/editText2"/>
+            android:id="@+id/passwordsu"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
 
     <Button
-        android:id="@+id/buttonlogin"
+        android:id="@+id/buttonsave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingVertical="6dp"
