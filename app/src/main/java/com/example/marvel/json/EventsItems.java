@@ -51,3 +51,4 @@ public class EventsItems implements Parcelable {
         dest.writeString(name);
     }
 }
+

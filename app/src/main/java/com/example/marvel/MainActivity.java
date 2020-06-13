@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void nextpage(String nickname){
-        Intent intent = new Intent(this, CharactersActivity.class);
-        intent.putExtra("nickname",nickname);
-        startActivity(intent);
+            Intent intent = new Intent(this, CharactersActivity.class);
+            intent.putExtra("nickname",nickname);
+            startActivity(intent);
     }
     public void announcer(String message){
         Toast.makeText(this,message,Toast.LENGTH_LONG).show();
